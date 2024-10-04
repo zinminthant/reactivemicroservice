@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xyzxc.exchange.data.Currencies;
 import com.xyzxc.exchange.data.ExgVal;
 
+import reactor.core.publisher.Mono;
+
 @RestController
 public class ExchangeController {
 	@GetMapping("/currexg/from/{from}/to/{to}")
-	public ExgVal getInventoryDetails(@PathVariable("from") Currencies from, @PathVariable("to") Currencies to) {
+	public Mono<ExgVal> getInventoryDetails(@PathVariable("from") Currencies from, @PathVariable("to") Currencies to) {
 		
 		ExgVal exgVal = null;
 
@@ -22,6 +24,6 @@ public class ExchangeController {
 			exgVal = new ExgVal(901L, from, to, 105);
 		}
 
-		return exgVal;
+		return Mono.just(exgVal);
 	}
 }

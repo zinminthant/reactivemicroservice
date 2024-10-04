@@ -11,20 +11,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xyzxc.inventory.data.Inventory;
 
+import reactor.core.publisher.Mono;
+
 @RestController
 public class InventoryController {
 
 	List<Inventory> inventoryList = new ArrayList<Inventory>();
+	
+	
+	
+
+	public InventoryController() {
+		populateInventoryList();
+	}
 
 	@GetMapping("/inventory/{productid}")
-	public Inventory getInventoryDetails(@PathVariable Long productid) {
-		Inventory inventory = getInventoryInfo(productid);
+	public Mono<Inventory> getInventoryDetails(@PathVariable Long productid) {
+		Mono<Inventory> inventory = Mono.just(getInventoryInfo(productid));
 
 		return inventory;
 	}
 
 	private Inventory getInventoryInfo(Long productid) {
-		populateInventoryList();
+		
 
 		for (Inventory i : inventoryList) {
 			if (productid.equals(i.getProductID())) {
