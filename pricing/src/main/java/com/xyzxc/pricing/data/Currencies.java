@@ -1,7 +1,7 @@
 package com.xyzxc.pricing.data;
 
 
-enum Currencies {
+public enum Currencies {
   USD,
   INR,
   YEN

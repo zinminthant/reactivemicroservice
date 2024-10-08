@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @RestController
 public class ExchangeController {
 	@GetMapping("/currexg/from/{from}/to/{to}")
-	public Mono<ExgVal> getInventoryDetails(@PathVariable("from") Currencies from, @PathVariable("to") Currencies to) {
+	public Mono<ExgVal> getExchangeValue(@PathVariable("from") Currencies from, @PathVariable("to") Currencies to) {
 		
 		ExgVal exgVal = null;
 

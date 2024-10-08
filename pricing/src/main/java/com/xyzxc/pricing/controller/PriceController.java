@@ -3,13 +3,16 @@ package com.xyzxc.pricing.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.xyzxc.pricing.data.Currencies;
 import com.xyzxc.pricing.data.ExgVal;
 import com.xyzxc.pricing.data.Price;
+import com.xyzxc.pricing.service.PricingService;
 
 import reactor.core.publisher.Mono;
 
@@ -17,26 +20,22 @@ import reactor.core.publisher.Mono;
 public class PriceController {
 
 	public WebClient webClient = WebClient.create();
+	
+	@Autowired
+	private PricingService pricingService;
 
 	List<Price> priceList = new ArrayList<Price>();
 
 	@GetMapping("/price/{productid}")
 	public Mono<Price> getPriceDetails(@PathVariable Long productid) {
 		Mono<Price> price = Mono.just(getPriceInfo(productid));
+		
+//		Mono<ExgVal> exgVal = webClient.get().uri("http://localhost:8004/currexg/from/USD/to/YEN").retrieve()
+//				.bodyToMono(ExgVal.class);
 
-		// Get Exchange Value
-//		Integer exgVal = restTemplate.getForObject("http://localhost:8004/currexg/from/USD/to/YEN", ExgVal.class)
-//				.getExgVal();
-//		
-		Mono<ExgVal> exgVal = webClient.get().uri("http://localhost:8004/currexg/from/USD/to/YEN").retrieve()
-				.bodyToMono(ExgVal.class);
+		Mono<ExgVal> exgVal = pricingService.getExchangeValue(Currencies.USD,Currencies.YEN);
 
-//		try {
-//			Thread.sleep(10000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 
 		return Mono.zip(price, exgVal)
 				.map(tuple -> new Price(tuple.getT1().getPriceID(), tuple.getT1().getProductID(),

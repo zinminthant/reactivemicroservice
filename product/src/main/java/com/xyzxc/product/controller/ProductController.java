@@ -3,6 +3,7 @@ package com.xyzxc.product.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,12 +13,15 @@ import com.xyzxc.product.data.Inventory;
 import com.xyzxc.product.data.Price;
 import com.xyzxc.product.data.Product;
 import com.xyzxc.product.data.ProductInfo;
+import com.xyzxc.product.service.ProductService;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
 public class ProductController {
+
+	@Autowired
+	private ProductService productService;
 
 	List<ProductInfo> productList = new ArrayList<ProductInfo>();
 
@@ -36,12 +40,14 @@ public class ProductController {
 		Mono<ProductInfo> productInfo = Mono.just(getProductInfo(productid));
 
 		// Get Price from pricing-service
-		Mono<Price> price = webClient.get().uri("http://localhost:8002/price/{productid}", productid).retrieve()
-				.bodyToMono(Price.class);
+//		Mono<Price> price = webClient.get().uri("http://localhost:8002/price/{productid}", productid).retrieve()
+//				.bodyToMono(Price.class);
+
+		Mono<Price> price = productService.fetchPriceDetails(productid);
+
 
 		// Get Stock Avail from inventory-service
-		Mono<Inventory> inventory = webClient.get().uri("http://localhost:8003/inventory/{productid}", productid)
-				.retrieve().bodyToMono(Inventory.class);
+		Mono<Inventory> inventory = productService.fetchInventoryDetails(productid);
 
 		System.out.println("2");
 		return Mono.zip(productInfo, price, inventory)
