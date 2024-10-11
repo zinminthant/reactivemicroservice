@@ -9,12 +9,12 @@
 		<version>3.3.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>com.xyzxc</groupId>
+	<artifactId>gatway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>price</name>
-	<description>Price Service</description>
+	<name>gatway</name>
+	<description>API Gateway</description>
 	<url />
 	<licenses>
 		<license />
@@ -33,45 +33,16 @@
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
 	</properties>
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
-
-		<!--
-		https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-hystrix -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-			<version>2.2.10.RELEASE</version>
-		</dependency>
-
-
-		<!--
-		https://mvnrepository.com/artifact/com.playtika.reactivefeign/feign-reactor-core -->
-		<dependency>
-			<groupId>com.playtika.reactivefeign</groupId>
-			<artifactId>feign-reactor-core</artifactId>
-			<version>4.2.1</version>
-		</dependency>
-
-		<!--
-		https://mvnrepository.com/artifact/com.playtika.reactivefeign/feign-reactor-webclient -->
-		<dependency>
-			<groupId>com.playtika.reactivefeign</groupId>
-			<artifactId>feign-reactor-webclient</artifactId>
-			<version>4.2.1</version>
-		</dependency>
-
-
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -98,11 +69,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.projectreactor</groupId>
-			<artifactId>reactor-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -115,6 +81,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
 	<build>
 		<plugins>
 			<plugin>

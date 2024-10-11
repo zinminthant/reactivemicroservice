@@ -30,6 +30,11 @@ public class ProductController {
 	public ProductController() {
 		populateProductList();
 	}
+	
+	@GetMapping("/product/getInventoryPort")
+	public String getInventoryPort() {
+		return productService.getInventoryServicePort();
+	}
 
 	@GetMapping("/product/details/{productid}")
 	public Mono<Product> getProductDetails(@PathVariable Long productid) {

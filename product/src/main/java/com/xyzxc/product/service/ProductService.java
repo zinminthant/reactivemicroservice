@@ -10,5 +10,9 @@ public interface ProductService {
 	public Mono<Price> fetchPriceDetails(Long productid);
 	
 	public Mono<Inventory> fetchInventoryDetails(Long productid);
+	
+	
+	public String getInventoryServicePort();
+
 
 }

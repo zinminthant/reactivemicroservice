@@ -31,4 +31,10 @@ public class ProductServiceImpl implements ProductService
 		return Mono.just(inventoryClient.getInventoryDetails(productid));
 	}
 
+	@Override
+	public String getInventoryServicePort() {
+		// TODO Auto-generated method stub
+		return inventoryClient.getPortInfo();
+	}
+
 }
