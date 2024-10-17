@@ -3,6 +3,7 @@ package com.xyzxc.exchange.controller;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,12 +14,24 @@ import com.xyzxc.exchange.data.ExgVal;
 import reactor.core.publisher.Mono;
 
 @RestController
+@RefreshScope
 public class ExchangeController {
 	
 	
 	
 	@Value("${server.port}")
 	private String port;
+	
+	
+	@Value("${message}")
+	private String message;
+	
+	
+	@GetMapping("/currexg/message")
+	public String getMessage() {
+		return message;
+	}
+	
 	
 	
 	@GetMapping("/currexg/port")
